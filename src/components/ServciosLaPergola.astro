@@ -1,0 +1,157 @@
+---
+import ChipServicio from "./Heroui/ChipLaPergola";
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  className?: string;
+}
+
+const { 
+  title = "Nuestros Servicios",
+  subtitle = "Todo lo que necesitás para disfrutar del verano",
+  className = ""
+} = Astro.props;
+
+const servicios = [
+  { nombre: "Guardavidas", icon: "guardavidas", color: "primary" },
+  { nombre: "Pileta", icon: "pileta", color: "secondary" },
+  { nombre: "Pet Friendly", icon: "petFriendly", color: "success" },
+  { nombre: "Restaurant", icon: "restaurant", color: "warning" },
+  { nombre: "WiFi Gratis", icon: "wifi", color: "secondary" },
+  { nombre: "Estacionamiento", icon: "parking", color: "default" },
+  { nombre: "Sombrillas", icon: "umbrella", color: "primary" },
+  { nombre: "Duchas", icon: "shower", color: "secondary" },
+  { nombre: "Vestuarios", icon: "locker", color: "success" },
+  { nombre: "Bar", icon: "bar", color: "warning" },
+  { nombre: "Música", icon: "music", color: "danger" },
+  { nombre: "Playa Privada", icon: "beach", color: "primary" },
+  { nombre: "Juegos", icon: "games", color: "success" }
+];
+
+// Dividir servicios en dos filas
+const primeraFila = servicios.slice(0, 7);
+const segundaFila = servicios.slice(7);
+---
+
+<section class={`py-16 overflow-hidden ${className}`}>
+  <div class=" mx-auto">
+    <!-- Título -->
+    <div class="text-center mb-12">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{title}</h2>
+      <p class="text-lg text-gray-600">{subtitle}</p>
+    </div>
+
+    <!-- Desktop: Grid estático -->
+    <div class="hidden md:flex flex-wrap gap-4 justify-center">
+      {servicios.map((servicio) => (
+        <ChipServicio
+          client:load
+          nombre={servicio.nombre}
+          icon={servicio.icon}
+          color={servicio.color}
+        />
+      ))}
+    </div>
+
+    <!-- Mobile: Carruseles infinitos -->
+    <div class="md:hidden space-y-6">
+      <!-- Carrusel 1: Izquierda → Derecha -->
+      <div class="carousel-container">
+        <div class="carousel-track carousel-left">
+          {[...primeraFila, ...primeraFila].map((servicio, idx) => (
+            <div class="carousel-item" key={`left-${idx}`}>
+              <ChipServicio
+                client:load
+                nombre={servicio.nombre}
+                icon={servicio.icon}
+                color={servicio.color}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Carrusel 2: Derecha → Izquierda -->
+      <div class="carousel-container">
+        <div class="carousel-track carousel-right">
+          {[...segundaFila, ...segundaFila].map((servicio, idx) => (
+            <div class="carousel-item" key={`right-${idx}`}>
+              <ChipServicio
+                client:load
+                nombre={servicio.nombre}
+                icon={servicio.icon}
+                color={servicio.color}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent
+    );
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 1rem;
+    width: max-content;
+  }
+
+  .carousel-item {
+    flex-shrink: 0;
+  }
+
+  /* Animación izquierda → derecha */
+  .carousel-left {
+    animation: scrollLeft 20s linear infinite;
+  }
+
+  @keyframes scrollLeft {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Animación derecha → izquierda */
+  .carousel-right {
+    animation: scrollRight 20s linear infinite;
+  }
+
+  @keyframes scrollRight {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  /* Pausar animación al hover */
+  .carousel-track:hover {
+    animation-play-state: paused;
+  }
+</style>
