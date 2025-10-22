@@ -1,0 +1,32 @@
+@import "tailwindcss";
+@plugin '../hero.ts';
+@source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
+
+
+
+
+
+
+@font-face {
+  font-family: 'Alexandria';
+  src: url('Fonts/static/Alexandria-Regular.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+@font-face {
+  font-family: 'Alexandria';
+  src: url('Fonts/static/Alexandria-SemiBold.ttf') format('ttf');
+  font-weight:600;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+body{
+    font-family: Alexandria, sans-serif;
+}

@@ -1,22 +1,56 @@
+---
+import HeaderLaPergola from "../components/HeaderLaPergola.astro";
+import FooterLaPergola from "../components/FooterLaPergola.astro";
+import '../styles/global.css'
+import { ClientRouter } from 'astro:transitions'
+const defaultTitle = 'Balneario la pergola Valeria del mar'
+const defaultDescription =
+  'Disfruta junto a nosotros el mejor verano de tu vida.'
+export interface Props {
+  title?: string
+  description?: string
+}
+let { title, description } = Astro.props
+
+title ??= defaultTitle
+description ??= defaultDescription
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		 <title>{title}</title>
+
+		  <link
+      rel="preload"
+      href="/Fonts/static/Alexandria-Regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/Fonts/static/Alexandria-SemiBold.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin="anonymous"
+    />
+
+
+	<ClientRouter />
 	</head>
 	<body>
-		<slot />
+		<HeaderLaPergola/>
+		<slot name="HeroLaPergola" />
+		<div class="max-w-7xl mx-auto">
+			<slot />
+		</div>
+		<FooterLaPergola/>
 	</body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+

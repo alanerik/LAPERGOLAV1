@@ -1,0 +1,101 @@
+---
+import { Link, Button } from '@heroui/react';
+
+// Constantes de navegación
+const NAV_LINKS = [
+  { href: '/', label: 'Inicio' },
+  { href: '/nosotros', label: 'Nosotros' },
+  { href: '/servicios', label: 'Servicios' },
+  { href: '/contacto', label: 'Contacto' },
+];
+---
+
+<header class="w-full bg-[#1b62c6]">
+  <div class="max-w-284 mx-auto px-4 py-4">
+    <nav class="flex items-center justify-between h-30">
+      <!-- Logo - Izquierda -->
+      <div class="flex items-center">
+        <img 
+          src="/logo.svg" 
+          alt="La Pergola" 
+          class="h-30 w-auto"
+        />
+      </div>
+
+      <!-- Links Desktop - Derecha -->
+      <div class="hidden md:flex items-center gap-6">
+        {NAV_LINKS.map((link) => (
+          <Button  as={Link} size="lg" radius="full" variant="bordered"
+            href={link.href}
+            className="text-white"
+          >
+            {link.label}
+          </Button>
+        ))}
+      </div>
+
+      <!-- Botón Hamburguesa Mobile - Derecha -->
+      <button
+        id="menu-toggle"
+        class="md:hidden p-2"
+        aria-label="Abrir menú"
+      >
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- Menú Mobile - Pantalla Completa (FUERA DEL HEADER) -->
+<div id="mobile-menu" class="hidden fixed inset-0 bg-white z-9999 w-screen h-screen">
+  <div class="flex flex-col h-full w-full">
+    <!-- Header del menú mobile -->
+    <div class="flex items-center justify-end px-4 py-4">
+      <!-- Botón Cerrar - Derecha -->
+      <button
+        id="menu-close"
+        class="p-2"
+        aria-label="Cerrar menú"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1b62c6" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-letter-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M10 8l4 8" /><path d="M10 16l4 -8" /></svg>
+      </button>
+    </div>
+
+    <!-- Links Mobile -->
+    <div class="flex flex-col gap-2 p-4">
+      {NAV_LINKS.map((link) => (
+        <Button
+          as={Link}
+          size="lg"
+          radius="full"
+          variant="flat"
+          href={link.href}
+          className="text-black text-lg py-3 mobile-link"
+        >
+          {link.label}
+        </Button>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuClose = document.getElementById('menu-close');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+
+  menuToggle?.addEventListener('click', () => {
+    mobileMenu?.classList.remove('hidden');
+  });
+
+  menuClose?.addEventListener('click', () => {
+    mobileMenu?.classList.add('hidden');
+  });
+
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+    });
+  });
+</script>
