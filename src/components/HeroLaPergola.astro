@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets'; 
 import sliderImage from '../assets/imgHeroBanner.png'; 
-import { Button, Link } from "@heroui/react";
+import ButtonLink from "../components/Heroui/ButtonLaPergola";
 const title = "El balneario ideal para disfrutar tus vacaciones";
 const buttonText = "Empezá tus vacaciones";
 ---
@@ -15,9 +15,9 @@ const buttonText = "Empezá tus vacaciones";
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col items-center justify-center gap-10 text-center">
                 <h1 class="text-4xl font-bold text-white sm:text-5xl md:text-6xl">{title}</h1>
-                <Button as={Link} href="#" size='lg' variant="solid" color="warning" className='text-2xl md:text-3xl sm:text-2xl' >
+                <ButtonLink client:load href="#">
                     {buttonText}
-                </Button>
+                </ButtonLink>
             </div>
         </div>
     </div>
